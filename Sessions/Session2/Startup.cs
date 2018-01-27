@@ -14,18 +14,14 @@ namespace Session2
 {
     public class Startup
     {
-        IConfigurationRoot _configurationRoot;
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
-            _configurationRoot = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-                .Build();
+            _configuration = configuration;
         }
-
+        public IConfiguration _configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(IConfigurationRoot), _configurationRoot);
+            services.AddSingleton(typeof(IConfiguration), _configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -17,8 +17,17 @@ namespace Session2
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) => new WebHostBuilder()
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .Build();
+
+            return new WebHostBuilder()
                 .UseKestrel()
+                .UseConfiguration(config)
                 .UseStartup<Startup>().Build();
+        }
     }
 }

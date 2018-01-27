@@ -11,19 +11,19 @@ namespace Session2.Infrastructure
     public class ConfigToResponseHeader
     {
         private readonly RequestDelegate _next;
-        private readonly IConfigurationRoot _configurationRoot;
+        private readonly IConfiguration _configuration;
 
-        public ConfigToResponseHeader(RequestDelegate next, IConfigurationRoot configurationRoot)
+        public ConfigToResponseHeader(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
-            _configurationRoot = configurationRoot;
+            _configuration = configuration;
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
-            httpContext.Response.Headers.Add("X-Powered-By", _configurationRoot.GetSection("ResponseHeaders")["X-Powered-By"]);
-            httpContext.Response.Headers.Add("H1", _configurationRoot.GetSection("ResponseHeaders")["H1"]);
-            httpContext.Response.Headers.Add("H2", _configurationRoot.GetSection("ResponseHeaders")["H2"]);
+            httpContext.Response.Headers.Add("X-Powered-By", _configuration.GetSection("ResponseHeaders")["X-Powered-By"]);
+            httpContext.Response.Headers.Add("H1", _configuration.GetSection("ResponseHeaders")["H1"]);
+            httpContext.Response.Headers.Add("H2", _configuration.GetSection("ResponseHeaders")["H2"]);
 
             await httpContext.Response.WriteAsync("Hello from ConfigToResponseHeader\nResponse Editing Middleware:)");
         }
