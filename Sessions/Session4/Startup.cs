@@ -35,6 +35,10 @@ namespace Session4
                                 app
                             )
                         );
+                    routeBuilder.MapRoute(
+                            "default",
+                            "{controller=Home}/{action=Index}/{id?}"
+                        );
                     //routeBuilder.MapRoute("{controller=Home}/{action=Index}/{id?}", (new OldUrlRouteFixer(routeBuilder.DefaultHandler)).FixRoute ); //NOT Works.. I dont know why!
                 }
             );
